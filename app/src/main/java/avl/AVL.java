@@ -10,6 +10,7 @@ public class AVL {
     return size;
   }
 
+
   /** find w in the tree. return the node containing w or
   * null if not found */
   public Node search(String w) {
@@ -42,6 +43,32 @@ public class AVL {
    * pre: n is not null */
   private void bstInsert(Node n, String w) {
     // TODO
+    if (n == null){
+      return;
+    }
+    if (w.equals(n.word)){ // BST can't have duplicate 
+      return;
+    }
+    if (w.compareTo(n.word) < 0){
+      if (n.left != null){
+        bstInsert(n.left, w);
+        return;
+      }else{
+        n.left = new Node(w);
+        size++;
+        return;
+      }
+    }
+    if (w.compareTo(n.word) > 0){
+      if (n.right != null){
+        bstInsert(n.right, w);
+        return;
+      }else{
+        n.right = new Node(w);
+        size++;
+        return;
+      }
+    }
   }
 
   /** insert w into the tree, maintaining AVL balance
