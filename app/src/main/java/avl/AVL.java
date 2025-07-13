@@ -78,12 +78,46 @@ public class AVL {
   *  performed by this method. */
   public void avlInsert(String w) {
     // TODO
+    if (root == null) {
+      root = new Node(w);
+      size = 1;
+      return;
+    }
+    avlInsert(root, w);
   }
 
   /* insert w into the tree, maintaining AVL balance
    *  precondition: the tree is AVL balanced and n is not null */
   private void avlInsert(Node n, String w) {
     // TODO
+    if (n == null){
+      return;
+    }
+    if (w.equals(n.word)){
+      return;
+    }
+    if (w.compareTo(n.word) < 0){
+      if (n.left != null){
+        avlInsert(n.left, w);
+      }else{
+        n.left = new Node(w);
+        n.left.height = 0;
+        n.left.parent = n;
+        size++;
+      }
+    }
+    if (w.compareTo(n.word) > 0){
+      if (n.right != null){
+        avlInsert(n.right, w);
+      }else{
+        n.right = new Node(w);
+        n.right.height = 0;
+        n.right.parent = n;
+        size++;
+      }
+    }
+    n.height = getHeight(n);
+    rebalance(n);
 
   }
 
