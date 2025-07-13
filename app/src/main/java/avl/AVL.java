@@ -55,6 +55,7 @@ public class AVL {
         return;
       }else{
         n.left = new Node(w);
+        n.left.parent = n;
         size++;
         return;
       }
@@ -65,6 +66,7 @@ public class AVL {
         return;
       }else{
         n.right = new Node(w);
+        n.right.parent = n;
         size++;
         return;
       }
@@ -82,13 +84,14 @@ public class AVL {
    *  precondition: the tree is AVL balanced and n is not null */
   private void avlInsert(Node n, String w) {
     // TODO
+
   }
 
   /** do a left rotation: rotate on the edge from x to its right child.
   *  precondition: x has a non-null right child */
   public void leftRotate(Node x) {
     // TODO
-    if (x.right == null){
+    if (x.right == null){ 
       return;
     }
     Node thisNode = x;
@@ -99,17 +102,43 @@ public class AVL {
       newRoot.parent = null;
     }else{
       newRoot.parent = x.parent;
+      if (newRoot.parent.right == x){
+        newRoot.parent.right = newRoot;
+      }else{
+        newRoot.parent.left = newRoot;
+      }
     }
-
+    
     newRoot.left = thisNode;
     thisNode.parent = newRoot;
     thisNode.right = newRight;
     if (newRight != null){
       newRight.parent = thisNode;
     }
+    
+    newRoot.left.height = getHeight(newRoot.left);
+    newRoot.height = getHeight(newRoot);
 
     return;
 
+  }
+
+  // gets heights of nodes in tree
+  private int getHeight(Node n){
+    if (n == null){
+      return -1;
+    }
+    if (n.right == null && n.left == null){
+      return 0;
+    }
+    if (n.right == null){
+      return n.left.height + 1;
+    }
+    if (n.left == null){
+      return n.right.height + 1;
+    }
+    int h  = Math.max(n.left.height, n.right.height) + 1;
+    return h;
   }
 
   /** do a right rotation: rotate on the edge from x to its left child.
@@ -129,6 +158,11 @@ public class AVL {
       newRoot.parent = null;
     }else{
       newRoot.parent = y.parent;
+      if (newRoot.parent.right == y){
+        newRoot.parent.right = newRoot;
+      }else{
+        newRoot.parent.left = newRoot;
+      }
     }
     newRoot.right = thisNode;
     thisNode.parent = newRoot;
@@ -136,7 +170,11 @@ public class AVL {
     if (newLeft != null){
       newLeft.parent = thisNode;
     }
-    
+
+    newRoot.right.height = getHeight(newRoot.right);
+    newRoot.height = getHeight(newRoot);
+
+
     return;
   }
 
@@ -144,6 +182,27 @@ public class AVL {
   *  precondition: none of n's descendants violates the AVL property */
   public void rebalance(Node n) {
     // TODO
+    if (getBal(n) > 1){
+      if (getBal(n.right) < 0){
+        rightRotate(n.right);
+        leftRotate(n);
+      }else{
+        leftRotate(n);
+      }
+      }
+      if(getBal(n) < -1){
+        if (getBal(n.left) > 0){
+        leftRotate(n.left);
+        rightRotate(n);
+      }else{
+        rightRotate(n);
+      }
+      }
+  }
+
+  public int getBal(Node n){
+    int balance = getHeight(n.right) - getHeight(n.left);
+    return balance;
   }
 
   /** remove the word w from the tree */
@@ -170,6 +229,11 @@ public class AVL {
       System.out.print("        ");
     }
     System.out.println(n);
+    // if (n.parent != null){
+
+    //   System.out.print(n.parent.word);
+    // }
+
     printSubtree(n.left, level + 1);
   }
 
