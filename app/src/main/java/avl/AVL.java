@@ -1,5 +1,5 @@
 package avl;
-
+// Shayla Neitzel - 7/15/25 - A2: BST & AVL tree implementation
 public class AVL {
 
   public Node root;
@@ -42,7 +42,6 @@ public class AVL {
   /* insert w into the tree rooted at n, ignoring balance
    * pre: n is not null */
   private void bstInsert(Node n, String w) {
-    // TODO
     if (n == null){
       return;
     }
@@ -77,7 +76,6 @@ public class AVL {
   *  precondition: the tree is AVL balanced and any prior insertions have been
   *  performed by this method. */
   public void avlInsert(String w) {
-    // TODO
     if (root == null) {
       root = new Node(w);
       size = 1;
@@ -89,7 +87,6 @@ public class AVL {
   /* insert w into the tree, maintaining AVL balance
    *  precondition: the tree is AVL balanced and n is not null */
   private void avlInsert(Node n, String w) {
-    // TODO
     if (n == null){
       return;
     }
@@ -124,7 +121,6 @@ public class AVL {
   /** do a left rotation: rotate on the edge from x to its right child.
   *  precondition: x has a non-null right child */
   public void leftRotate(Node x) {
-    // TODO
     if (x.right == null){ 
       return;
     }
@@ -178,7 +174,6 @@ public class AVL {
   /** do a right rotation: rotate on the edge from x to its left child.
   *  precondition: y has a non-null left child */
   public void rightRotate(Node y) {
-    // TODO
     if (y.left == null){
       return;
     }
@@ -215,7 +210,6 @@ public class AVL {
   /** rebalance a node N after a potentially AVL-violoting insertion.
   *  precondition: none of n's descendants violates the AVL property */
   public void rebalance(Node n) {
-    // TODO
     if (getBal(n) > 1){
       if (getBal(n.right) < 0){
         rightRotate(n.right);
@@ -234,6 +228,7 @@ public class AVL {
       }
   }
 
+  // gets balance of nodes in tree
   public int getBal(Node n){
     int balance = getHeight(n.right) - getHeight(n.left);
     return balance;

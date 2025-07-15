@@ -4,6 +4,7 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.io.File;
 import java.io.FileNotFoundException;
+// Shayla Neitzel - 7/15/25 - A2: Counts number of Unique lines (compares efficiency between solutions)
 public class Unique {
 
     /** Main program: prints the number of unique lines in a given file by one
@@ -58,8 +59,8 @@ public class Unique {
         while (sc.hasNextLine()){
             a.avlInsert(sc.nextLine());
         }
-      // TODO - implement this; its runtime should be O(n log n)
-      return a.getSize(); // placeholder, so code compiles
+
+      return a.getSize(); 
     }
 
       
